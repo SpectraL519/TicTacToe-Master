@@ -84,7 +84,7 @@ object ClassicWinCondition : IWinCondition {
         return Status(result = IWinCondition.Result.NONE)
     }
 
-    override fun getEvaluation(board: GameBoard, player: Figure): Long {
+    override fun evaluation(board: GameBoard, player: Figure): Long {
         val boardSize = board.size()
         val maxEval = 10.0.pow(boardSize.toDouble()).toLong()
         val opponent = player.next()

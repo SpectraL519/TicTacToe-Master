@@ -32,8 +32,8 @@ object MobiusStripWinCondition : IWinCondition {
         return classicWinStatus // (TIE, null) or (NONE, null)
     }
 
-    override fun getEvaluation(board: GameBoard, player: Figure): Long {
-        return ClassicWinCondition.getEvaluation(board, player)
+    override fun evaluation(board: GameBoard, player: Figure): Long {
+        return ClassicWinCondition.evaluation(board, player)
     }
 
     private fun checkStrip (

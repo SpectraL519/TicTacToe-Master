@@ -35,7 +35,7 @@ constructor(
         val result = this.winCondition.check(board).result
 
         if (depth <= 0 || result != IWinCondition.Result.NONE)
-            return MoveParams(Coordinates.NONE, this.winCondition.getEvaluation(board, this.player))
+            return MoveParams(Coordinates.NONE, this.winCondition.evaluation(board, this.player))
 
         val player = this.getPlayer(maxPlayer)
         val compare = this.getCompareMethod(maxPlayer)
