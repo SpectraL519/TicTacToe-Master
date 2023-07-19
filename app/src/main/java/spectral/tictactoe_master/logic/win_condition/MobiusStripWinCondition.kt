@@ -8,6 +8,8 @@ import spectral.tictactoe_master.logic.utils.Status
 
 
 object MobiusStripWinCondition : IWinCondition {
+    override val boardSize: Int? = null
+
     override fun check(board: GameBoard): Status {
         val classicWinStatus: Status = ClassicWinCondition.check(board)
         if (

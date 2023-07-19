@@ -7,6 +7,8 @@ import spectral.tictactoe_master.logic.utils.Status
 
 
 object ToeTacTicWinCondition : IWinCondition {
+    override val boardSize: Int? = null
+
     override fun check(board: GameBoard): Status {
         val classicStatus: Status = ClassicWinCondition.check(board)
         return Status(

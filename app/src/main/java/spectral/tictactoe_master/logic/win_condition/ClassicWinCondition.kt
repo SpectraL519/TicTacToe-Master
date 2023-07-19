@@ -9,6 +9,8 @@ import kotlin.math.pow
 
 
 object ClassicWinCondition : IWinCondition {
+    override val boardSize: Int? = null
+
     override fun check (board: GameBoard): Status {
         val boardSize: Int = board.size()
 
@@ -79,9 +81,8 @@ object ClassicWinCondition : IWinCondition {
         }
 
         if (board.full())
-            return Status(result = IWinCondition.Result.TIE)
-
-        return Status(result = IWinCondition.Result.NONE)
+            return Status.TIE
+        return Status.NONE
     }
 
     override fun evaluation(board: GameBoard, player: Figure): Long {

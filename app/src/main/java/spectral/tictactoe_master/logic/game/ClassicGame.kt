@@ -7,11 +7,14 @@ import spectral.tictactoe_master.logic.win_condition.IWinCondition
 
 
 class ClassicGame
-constructor(
+private constructor(
     // TODO: private val context: GameActivity,
-    private val _boardSize: Int,
-    private val _winCondition: IWinCondition = ClassicWinCondition
+    winCondition: IWinCondition = ClassicWinCondition,
+    boardSize: Int = 3
 ) : IGame {
+
+    private val _winCondition: IWinCondition = winCondition
+    private val _boardSize: Int = this._winCondition.boardSize ?: boardSize
 
     private var _state: GameState = GameState(GameBoard(this._boardSize))
     override val state: GameState

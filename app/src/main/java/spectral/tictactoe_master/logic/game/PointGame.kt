@@ -9,13 +9,17 @@ import spectral.tictactoe_master.logic.win_condition.IWinCondition
 class PointGame
 constructor(
     // TODO: private val context: GameActivity,
-    private val _boardSize: Int,
-    private val _winCondition: IWinCondition = ClassicWinCondition,
-    private val _points: Int = 3
+    winCondition: IWinCondition = ClassicWinCondition,
+    boardSize: Int = 3,
+    points: Int = 3
 ) : IGame {
 
+    private val _winCondition: IWinCondition = winCondition
+    private val _boardSize: Int = this._winCondition.boardSize ?: boardSize
+    private val _points: Int = points.coerceAtLeast(3)
+
     private var _state: GameState = GameState(GameBoard(this._boardSize))
-    private var _currentStatus: Status = Status()
+    private var _currentStatus: Status = Status.NONE
 
     override val state: GameState
         get() = this._state
@@ -91,7 +95,7 @@ constructor(
             )
         }
 
-        this._currentStatus = Status()
+        this._currentStatus = Status.NONE
         return coordinates
     }
 

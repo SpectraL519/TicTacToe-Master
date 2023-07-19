@@ -1,13 +1,13 @@
 package spectral.tictactoe_master.logic
 
+import org.junit.Assert
+import org.junit.Test
 import spectral.tictactoe_master.logic.utils.Coordinates
 import spectral.tictactoe_master.logic.utils.Figure
 import spectral.tictactoe_master.logic.utils.GameBoard
 import spectral.tictactoe_master.logic.win_condition.ClassicWinCondition
 import spectral.tictactoe_master.logic.win_condition.IWinCondition
 import spectral.tictactoe_master.logic.win_condition.MobiusStripWinCondition
-import org.junit.Assert
-import org.junit.Test
 import spectral.tictactoe_master.logic.win_condition.ToeTacTicWinCondition
 
 
@@ -391,5 +391,10 @@ class WinConditionTest {
         status = winCondition.check(board)
         Assert.assertEquals(IWinCondition.Result.TIE, status.result)
         Assert.assertEquals(emptyList<Coordinates>(), status.coordinates)
+    }
+
+    @Test // TODO
+    fun squavaWinConditionTest() {
+        Assert.assertTrue(true)
     }
 }
