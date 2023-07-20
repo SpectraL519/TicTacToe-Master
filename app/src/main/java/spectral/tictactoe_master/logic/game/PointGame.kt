@@ -4,6 +4,7 @@ package spectral.tictactoe_master.logic.game
 import spectral.tictactoe_master.logic.utils.*
 import spectral.tictactoe_master.logic.win_condition.ClassicWinCondition
 import spectral.tictactoe_master.logic.win_condition.IWinCondition
+import kotlin.random.Random
 
 
 class PointGame
@@ -83,14 +84,13 @@ constructor(
         var coordinates: List<Coordinates>? = null
         if (this._currentStatus.result != IWinCondition.Result.NONE) {
             val board = this._state.board
-            if (this._currentStatus.result == IWinCondition.Result.TIE) {
-                board.clear()
-            }
-            else {
+            if (this._currentStatus.result == IWinCondition.Result.TIE)
+                coordinates = this.randomCoordinates()
+            else
                 coordinates = this._currentStatus.coordinates
-                for (c in this._currentStatus.coordinates)
-                    board[c.row][c.column] = Figure.EMPTY
-            }
+
+            for (c in coordinates)
+                board[c.row][c.column] = Figure.EMPTY
 
             this._state.update(
                 board = board,
@@ -114,4 +114,7 @@ constructor(
             score = GameState.DEFAULT_SCORE
         )
     }
+
+    private fun randomCoordinates(): List<Coordinates> =
+        List(2 * this._boardSize) { Coordinates(Random.nextInt(this._boardSize), Random.nextInt(this._boardSize)) }
 }
