@@ -5,7 +5,7 @@ package spectral.tictactoe_master.logic.utils
 enum class Figure {
     EMPTY {
         override fun next(): Figure = this
-        override fun toString(): String = "none"
+        override fun toString(): String = "-"
     },
 
     O {

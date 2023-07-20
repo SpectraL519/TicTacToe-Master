@@ -43,10 +43,10 @@ constructor(
             board[x][y] = this._state.currentPlayer
 
             this._currentStatus = this.checkStatus()
-            val pointGained = (this._currentStatus.result != Status.Result.NONE)
+            val pointGained = (this._currentStatus.result != IWinCondition.Result.NONE)
             val score: MutableMap<Figure, Int> = this._state.score
             if (pointGained) {
-                if (this._currentStatus.result != Status.Result.LOSS)
+                if (this._currentStatus.result != IWinCondition.Result.LOSS)
                     score[this._currentStatus.player] = score.getOrDefault(this._currentStatus.player, -1) + 1
                 else
                     score[this._currentStatus.player.next()] = score.getOrDefault(this._currentStatus.player.next(), -1) + 1
@@ -57,7 +57,7 @@ constructor(
             this._state.update(
                 board = board,
                 currentPlayer = this._state.currentPlayer.next(),
-                blocked = (pointGained || this._currentStatus.result == Status.Result.TIE),
+                blocked = (pointGained || this._currentStatus.result == IWinCondition.Result.TIE),
                 finished = finished,
                 score = score,
             )
@@ -81,9 +81,9 @@ constructor(
         }
 
         var coordinates: List<Coordinates>? = null
-        if (this._currentStatus.result != Status.Result.NONE) {
+        if (this._currentStatus.result != IWinCondition.Result.NONE) {
             val board = this._state.board
-            if (this._currentStatus.result == Status.Result.TIE) {
+            if (this._currentStatus.result == IWinCondition.Result.TIE) {
                 board.clear()
             }
             else {

@@ -16,7 +16,7 @@ object ClassicWinCondition : IWinCondition {
 
         if (board.diagonal().all { it == Figure.O })
             return Status(
-                result = Status.Result.WIN,
+                result = IWinCondition.Result.WIN,
                 player = Figure.O,
                 coordinates = List(boardSize) {
                     index -> Coordinates(index, index)
@@ -25,7 +25,7 @@ object ClassicWinCondition : IWinCondition {
 
         if (board.diagonal().all { it == Figure.X })
             return Status(
-                result = Status.Result.WIN,
+                result = IWinCondition.Result.WIN,
                 player = Figure.X,
                 coordinates = List(boardSize) {
                     index -> Coordinates(index, index)
@@ -34,7 +34,7 @@ object ClassicWinCondition : IWinCondition {
 
         if (board.diagonal(false).all { it == Figure.O })
             return Status(
-                result = Status.Result.WIN,
+                result = IWinCondition.Result.WIN,
                 player = Figure.O,
                 coordinates = List(boardSize) {
                     index -> Coordinates(index, boardSize - 1 - index)
@@ -43,7 +43,7 @@ object ClassicWinCondition : IWinCondition {
 
         if (board.diagonal(false).all { it == Figure.X })
             return Status(
-                result = Status.Result.WIN,
+                result = IWinCondition.Result.WIN,
                 player = Figure.X,
                 coordinates = List(boardSize) {
                     index -> Coordinates(index, boardSize - 1 - index)
@@ -53,7 +53,7 @@ object ClassicWinCondition : IWinCondition {
         for (i: Int in 0 until boardSize) {
             if (board.row(i).all { it == Figure.O })
                 return Status(
-                    result = Status.Result.WIN,
+                    result = IWinCondition.Result.WIN,
                     player = Figure.O,
                     coordinates = List(boardSize) {
                         index -> Coordinates(i, index)
@@ -62,7 +62,7 @@ object ClassicWinCondition : IWinCondition {
 
             if (board.row(i).all { it == Figure.X })
                 return Status(
-                    result = Status.Result.WIN,
+                    result = IWinCondition.Result.WIN,
                     player = Figure.X,
                     coordinates = List(boardSize) {
                         index -> Coordinates(i, index)
@@ -71,7 +71,7 @@ object ClassicWinCondition : IWinCondition {
 
             if (board.column(i).all { it == Figure.O })
                 return Status(
-                    result = Status.Result.WIN,
+                    result = IWinCondition.Result.WIN,
                     player = Figure.O,
                     coordinates = List(boardSize) {
                         index -> Coordinates(index, i)
@@ -80,7 +80,7 @@ object ClassicWinCondition : IWinCondition {
 
             if (board.column(i).all { it == Figure.X })
                 return Status(
-                    result = Status.Result.WIN,
+                    result = IWinCondition.Result.WIN,
                     player = Figure.X,
                     coordinates = List(boardSize) {
                         index -> Coordinates(index, i)

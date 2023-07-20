@@ -20,7 +20,7 @@ object MobiusStripWinCondition : IWinCondition {
         val stripO = checkStrip(board, Figure.O)
         if (stripO != null)
             return Status(
-                result = Status.Result.WIN,
+                result = IWinCondition.Result.WIN,
                 player = Figure.O,
                 coordinates = stripO
             )
@@ -28,7 +28,7 @@ object MobiusStripWinCondition : IWinCondition {
         val stripX = checkStrip(board, Figure.X)
         if (stripX != null)
             return Status(
-                result = Status.Result.WIN,
+                result = IWinCondition.Result.WIN,
                 player = Figure.X,
                 coordinates = stripX
             )

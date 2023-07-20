@@ -3,11 +3,9 @@ package spectral.tictactoe_master.logic
 import spectral.tictactoe_master.logic.utils.Coordinates
 import spectral.tictactoe_master.logic.utils.Figure
 import spectral.tictactoe_master.logic.utils.GameBoard
-import spectral.tictactoe_master.logic.utils.Status
 import spectral.tictactoe_master.logic.win_condition.IWinCondition
 import kotlin.math.max
 import kotlin.math.min
-
 
 
 class BotHandler
@@ -35,7 +33,7 @@ constructor(
     ): MoveParams {
         val result = this.winCondition.check(board).result
 
-        if (depth <= 0 || result != Status.Result.NONE)
+        if (depth <= 0 || result != IWinCondition.Result.NONE)
             return MoveParams(Coordinates.NONE, this.winCondition.evaluation(board, this.player))
 
         val player = this.getPlayer(maxPlayer)
