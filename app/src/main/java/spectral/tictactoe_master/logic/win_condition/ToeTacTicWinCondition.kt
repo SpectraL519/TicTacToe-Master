@@ -13,12 +13,13 @@ object ToeTacTicWinCondition : IWinCondition {
         val classicStatus: Status = ClassicWinCondition.check(board)
         return Status(
             result = classicStatus.result.inverse(),
+            player = classicStatus.player,
             coordinates = classicStatus.coordinates
         )
     }
 
     override fun evaluation(board: GameBoard, player: Figure): Long {
-        TODO("Check correctness")
+        // TODO: check functionality
         return -ClassicWinCondition.evaluation(board, player)
     }
 }

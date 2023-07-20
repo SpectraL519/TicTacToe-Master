@@ -118,7 +118,11 @@ object SquavaWinCondition : IWinCondition {
                 board[win[2].row][win[2].column] == player &&
                 board[win[3].row][win[3].column] == player
             ) {
-                return Status(IWinCondition.getResult(player), win)
+                return Status(
+                    result = Status.Result.WIN,
+                    player = player,
+                    coordinates = win
+                )
             }
         }
 
@@ -132,7 +136,11 @@ object SquavaWinCondition : IWinCondition {
                 board[loss[1].row][loss[1].column] == player &&
                 board[loss[2].row][loss[2].column] == player
             ) {
-                return Status(IWinCondition.getResult(player.next()), loss)
+                return Status(
+                    result = Status.Result.LOSS,
+                    player = player,
+                    coordinates = loss
+                )
             }
         }
 

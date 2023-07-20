@@ -13,21 +13,23 @@ object MobiusStripWinCondition : IWinCondition {
     override fun check(board: GameBoard): Status {
         val classicWinStatus: Status = ClassicWinCondition.check(board)
         if (
-            classicWinStatus.result == IWinCondition.Result.O ||
-            classicWinStatus.result == IWinCondition.Result.X
+            classicWinStatus.player == Figure.O ||
+            classicWinStatus.player == Figure.X
         ) return classicWinStatus
 
         val stripO = checkStrip(board, Figure.O)
         if (stripO != null)
             return Status(
-                result = IWinCondition.Result.O,
+                result = Status.Result.WIN,
+                player = Figure.O,
                 coordinates = stripO
             )
 
         val stripX = checkStrip(board, Figure.X)
         if (stripX != null)
             return Status(
-                result = IWinCondition.Result.X,
+                result = Status.Result.WIN,
+                player = Figure.X,
                 coordinates = stripX
             )
 

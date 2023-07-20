@@ -3,6 +3,7 @@ package spectral.tictactoe_master.logic
 import spectral.tictactoe_master.logic.utils.Coordinates
 import spectral.tictactoe_master.logic.utils.Figure
 import spectral.tictactoe_master.logic.utils.GameBoard
+import spectral.tictactoe_master.logic.utils.Status
 import spectral.tictactoe_master.logic.win_condition.IWinCondition
 import kotlin.math.max
 import kotlin.math.min
@@ -17,7 +18,7 @@ constructor(
 ) {
 
     fun getMoveCoordinates (board: GameBoard): Coordinates =
-        this.minmax(
+        this.minimax(
             board,
             this.depth,
             Long.MIN_VALUE,
@@ -25,7 +26,7 @@ constructor(
             this.isMaxPlayer(player)
         ).coordinates
 
-    private fun minmax(
+    private fun minimax(
         board: GameBoard,
         depth: Int,
         alpha: Long,
@@ -34,7 +35,7 @@ constructor(
     ): MoveParams {
         val result = this.winCondition.check(board).result
 
-        if (depth <= 0 || result != IWinCondition.Result.NONE)
+        if (depth <= 0 || result != Status.Result.NONE)
             return MoveParams(Coordinates.NONE, this.winCondition.evaluation(board, this.player))
 
         val player = this.getPlayer(maxPlayer)
@@ -49,7 +50,7 @@ constructor(
             for (y: Int in 0 until boardSize) {
                 if (board[x][y] == Figure.EMPTY) {
                     board[x][y] = player // make a move
-                    val childParams = this.minmax(board, depth - 1, _alpha, _beta, !maxPlayer)
+                    val childParams = this.minimax(board, depth - 1, _alpha, _beta, !maxPlayer)
                     board[x][y] = Figure.EMPTY // undo the move
 
                     if (compare(childParams.evaluation, bestMove.evaluation)) {

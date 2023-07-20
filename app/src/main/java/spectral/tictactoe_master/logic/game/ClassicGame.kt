@@ -37,11 +37,15 @@ private constructor(
         if (board[x][y] == Figure.EMPTY) {
             board[x][y] = this._state.currentPlayer
 
-            val result = this.checkStatus().result
-            val finished = (result != IWinCondition.Result.NONE)
-            val score: MutableMap<IWinCondition.Result, Int> = this._state.score
-            if (finished)
-                score[result] = score.getOrDefault(result, -1) + 1
+            val status = this.checkStatus()
+            val finished = (status.result != Status.Result.NONE)
+            val score: MutableMap<Figure, Int> = this._state.score
+            if (finished) {
+                if (status.result != Status.Result.LOSS)
+                    score[status.player] = score.getOrDefault(status.player, -1) + 1
+                else
+                    score[status.player.next()] = score.getOrDefault(status.player.next(), -1) + 1
+            }
 
             this._state.update(
                 board = board,

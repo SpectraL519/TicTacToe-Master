@@ -43,19 +43,21 @@ constructor(
             board[x][y] = this._state.currentPlayer
 
             this._currentStatus = this.checkStatus()
-            val pointGained = (this._currentStatus.result != IWinCondition.Result.NONE)
-            val score: MutableMap<IWinCondition.Result, Int> = this._state.score
-            if (pointGained)
-                score[this._currentStatus.result] = score.getOrDefault(this._currentStatus.result, -1) + 1
-            val finished: Boolean = (
-                score[IWinCondition.Result.O] == this._points ||
-                score[IWinCondition.Result.X] == this._points
-            )
+            val pointGained = (this._currentStatus.result != Status.Result.NONE)
+            val score: MutableMap<Figure, Int> = this._state.score
+            if (pointGained) {
+                if (this._currentStatus.result != Status.Result.LOSS)
+                    score[this._currentStatus.player] = score.getOrDefault(this._currentStatus.player, -1) + 1
+                else
+                    score[this._currentStatus.player.next()] = score.getOrDefault(this._currentStatus.player.next(), -1) + 1
+            }
+
+            val finished: Boolean = score[Figure.O] == this._points || score[Figure.X] == this._points
 
             this._state.update(
                 board = board,
                 currentPlayer = this._state.currentPlayer.next(),
-                blocked = (pointGained || this._currentStatus.result == IWinCondition.Result.TIE),
+                blocked = (pointGained || this._currentStatus.result == Status.Result.TIE),
                 finished = finished,
                 score = score,
             )
@@ -79,10 +81,11 @@ constructor(
         }
 
         var coordinates: List<Coordinates>? = null
-        if (this._currentStatus.result != IWinCondition.Result.NONE) {
+        if (this._currentStatus.result != Status.Result.NONE) {
             val board = this._state.board
-            if (this._currentStatus.result == IWinCondition.Result.TIE)
+            if (this._currentStatus.result == Status.Result.TIE) {
                 board.clear()
+            }
             else {
                 coordinates = this._currentStatus.coordinates
                 for (c in this._currentStatus.coordinates)

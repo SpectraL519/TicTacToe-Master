@@ -1,8 +1,5 @@
 package spectral.tictactoe_master.logic.utils
 
-import spectral.tictactoe_master.logic.win_condition.IWinCondition
-
-
 
 data class GameState
 constructor(
@@ -10,9 +7,8 @@ constructor(
     private var _currentPlayer: Figure = Figure.O,
     private var _blocked: Boolean = false,
     private var _finished: Boolean = false,
-    private var _score: MutableMap<IWinCondition.Result, Int> = DEFAULT_SCORE,
+    private var _score: MutableMap<Figure, Int> = DEFAULT_SCORE,
 ) {
-
     val board get() = this._board
     val boardSize get() = this._board.size()
     fun figure (x: Int, y: Int): Figure = this._board[x][y]
@@ -22,15 +18,15 @@ constructor(
     val gameFinished get() = this._finished
 
     val score get() = this._score
-    fun getScore (result: IWinCondition.Result): Int =
-        this._score.getOrDefault(result, 0)
+    fun getScore (player: Figure): Int =
+        this._score.getOrDefault(player, 0)
 
     fun update (
         board: GameBoard = this._board,
         currentPlayer: Figure = this._currentPlayer,
         blocked: Boolean = this._blocked,
         finished: Boolean = this._finished,
-        score: MutableMap<IWinCondition.Result, Int> = this._score,
+        score: MutableMap<Figure, Int> = this._score,
     ) {
         this._board = board
         this._currentPlayer = currentPlayer
@@ -39,12 +35,14 @@ constructor(
         this._score = score
     }
 
+    // TODO: modify values in the _score map without replacing the instance
+
     companion object {
-        val DEFAULT_SCORE: MutableMap<IWinCondition.Result, Int>
+        val DEFAULT_SCORE: MutableMap<Figure, Int>
             get() = mutableMapOf(
-                IWinCondition.Result.O to 0,
-                IWinCondition.Result.X to 0,
-                IWinCondition.Result.TIE to 0
+                Figure.O to 0,
+                Figure.X to 0,
+                Figure.EMPTY to 0
             )
     }
 }
