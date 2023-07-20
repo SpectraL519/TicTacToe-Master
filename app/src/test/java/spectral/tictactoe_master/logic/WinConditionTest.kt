@@ -8,6 +8,7 @@ import spectral.tictactoe_master.logic.utils.GameBoard
 import spectral.tictactoe_master.logic.win_condition.*
 
 
+
 class WinConditionTest {
     @Test
     fun classicWinConditionTest() {
@@ -124,6 +125,7 @@ class WinConditionTest {
         Assert.assertEquals(Figure.EMPTY, status.player)
         Assert.assertEquals(emptyList<Coordinates>(), status.coordinates)
     }
+
 
 
     @Test
@@ -304,6 +306,7 @@ class WinConditionTest {
             }
         }
     }
+
 
 
     @Test

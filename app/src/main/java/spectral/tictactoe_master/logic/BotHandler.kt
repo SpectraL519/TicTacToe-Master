@@ -8,6 +8,7 @@ import kotlin.math.max
 import kotlin.math.min
 
 
+
 class BotHandler
 constructor(
     private val winCondition: IWinCondition,

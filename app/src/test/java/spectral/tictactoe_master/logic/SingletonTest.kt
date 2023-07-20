@@ -6,6 +6,7 @@ import spectral.tictactoe_master.logic.win_condition.ClassicWinCondition
 import spectral.tictactoe_master.logic.win_condition.MobiusStripWinCondition
 
 
+
 class SingletonTest {
     @Test
     fun classicWinConditionTest() {

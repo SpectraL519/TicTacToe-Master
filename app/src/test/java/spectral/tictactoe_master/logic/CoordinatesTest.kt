@@ -5,6 +5,7 @@ import org.junit.Test
 import spectral.tictactoe_master.logic.utils.Coordinates
 
 
+
 class CoordinatesTest {
     @Test
     fun regexTest() {

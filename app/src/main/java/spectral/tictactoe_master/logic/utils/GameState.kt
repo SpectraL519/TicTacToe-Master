@@ -1,6 +1,7 @@
 package spectral.tictactoe_master.logic.utils
 
 
+
 data class GameState
 constructor(
     private var _board: GameBoard,
@@ -34,7 +35,6 @@ constructor(
         this._finished = finished
         this._score = score
     }
-
     // TODO: modify values in the _score map without replacing the instance
 
     companion object {
