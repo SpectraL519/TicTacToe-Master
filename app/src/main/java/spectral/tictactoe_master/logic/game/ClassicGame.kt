@@ -7,11 +7,14 @@ import spectral.tictactoe_master.logic.win_condition.IWinCondition
 
 
 class ClassicGame
-constructor(
+private constructor(
     // TODO: private val context: GameActivity,
-    private val _boardSize: Int,
-    private val _winCondition: IWinCondition = ClassicWinCondition
+    winCondition: IWinCondition = ClassicWinCondition,
+    boardSize: Int = 3
 ) : IGame {
+
+    private val _winCondition: IWinCondition = winCondition
+    private val _boardSize: Int = this._winCondition.boardSize ?: boardSize
 
     private var _state: GameState = GameState(GameBoard(this._boardSize))
     override val state: GameState
@@ -34,11 +37,15 @@ constructor(
         if (board[x][y] == Figure.EMPTY) {
             board[x][y] = this._state.currentPlayer
 
-            val result = this.checkStatus().result
-            val finished = (result != IWinCondition.Result.NONE)
-            val score: MutableMap<IWinCondition.Result, Int> = this._state.score
-            if (finished)
-                score[result] = score.getOrDefault(result, -1) + 1
+            val status = this.checkStatus()
+            val finished = (status.result != IWinCondition.Result.NONE)
+            val score: MutableMap<Figure, Int> = this._state.score
+            if (finished) {
+                if (status.result != IWinCondition.Result.LOSS)
+                    score[status.player] = score.getOrDefault(status.player, -1) + 1
+                else
+                    score[status.player.next()] = score.getOrDefault(status.player.next(), -1) + 1
+            }
 
             this._state.update(
                 board = board,

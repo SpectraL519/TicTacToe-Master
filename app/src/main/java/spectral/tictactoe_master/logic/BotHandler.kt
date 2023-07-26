@@ -17,7 +17,7 @@ constructor(
 ) {
 
     fun getMoveCoordinates (board: GameBoard): Coordinates =
-        this.minmax(
+        this.minimax(
             board,
             this.depth,
             Long.MIN_VALUE,
@@ -25,7 +25,7 @@ constructor(
             this.isMaxPlayer(player)
         ).coordinates
 
-    private fun minmax(
+    private fun minimax(
         board: GameBoard,
         depth: Int,
         alpha: Long,
@@ -35,7 +35,7 @@ constructor(
         val result = this.winCondition.check(board).result
 
         if (depth <= 0 || result != IWinCondition.Result.NONE)
-            return MoveParams(Coordinates.NONE, this.winCondition.getEvaluation(board, this.player))
+            return MoveParams(Coordinates.NONE, this.winCondition.evaluation(board, this.player))
 
         val player = this.getPlayer(maxPlayer)
         val compare = this.getCompareMethod(maxPlayer)
@@ -49,7 +49,7 @@ constructor(
             for (y: Int in 0 until boardSize) {
                 if (board[x][y] == Figure.EMPTY) {
                     board[x][y] = player // make a move
-                    val childParams = this.minmax(board, depth - 1, _alpha, _beta, !maxPlayer)
+                    val childParams = this.minimax(board, depth - 1, _alpha, _beta, !maxPlayer)
                     board[x][y] = Figure.EMPTY // undo the move
 
                     if (compare(childParams.evaluation, bestMove.evaluation)) {

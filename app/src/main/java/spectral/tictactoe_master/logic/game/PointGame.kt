@@ -4,18 +4,23 @@ package spectral.tictactoe_master.logic.game
 import spectral.tictactoe_master.logic.utils.*
 import spectral.tictactoe_master.logic.win_condition.ClassicWinCondition
 import spectral.tictactoe_master.logic.win_condition.IWinCondition
+import kotlin.random.Random
 
 
 class PointGame
 constructor(
     // TODO: private val context: GameActivity,
-    private val _boardSize: Int,
-    private val _winCondition: IWinCondition = ClassicWinCondition,
-    private val _points: Int = 3
+    winCondition: IWinCondition = ClassicWinCondition,
+    boardSize: Int = 3,
+    points: Int = 3
 ) : IGame {
 
+    private val _winCondition: IWinCondition = winCondition
+    private val _boardSize: Int = this._winCondition.boardSize ?: boardSize
+    private val _points: Int = points.coerceAtLeast(3)
+
     private var _state: GameState = GameState(GameBoard(this._boardSize))
-    private var _currentStatus: Status = Status()
+    private var _currentStatus: Status = Status.NONE
 
     override val state: GameState
         get() = this._state
@@ -40,13 +45,15 @@ constructor(
 
             this._currentStatus = this.checkStatus()
             val pointGained = (this._currentStatus.result != IWinCondition.Result.NONE)
-            val score: MutableMap<IWinCondition.Result, Int> = this._state.score
-            if (pointGained)
-                score[this._currentStatus.result] = score.getOrDefault(this._currentStatus.result, -1) + 1
-            val finished: Boolean = (
-                score[IWinCondition.Result.O] == this._points ||
-                score[IWinCondition.Result.X] == this._points
-            )
+            val score: MutableMap<Figure, Int> = this._state.score
+            if (pointGained) {
+                if (this._currentStatus.result != IWinCondition.Result.LOSS)
+                    score[this._currentStatus.player] = score.getOrDefault(this._currentStatus.player, -1) + 1
+                else
+                    score[this._currentStatus.player.next()] = score.getOrDefault(this._currentStatus.player.next(), -1) + 1
+            }
+
+            val finished: Boolean = score[Figure.O] == this._points || score[Figure.X] == this._points
 
             this._state.update(
                 board = board,
@@ -78,12 +85,12 @@ constructor(
         if (this._currentStatus.result != IWinCondition.Result.NONE) {
             val board = this._state.board
             if (this._currentStatus.result == IWinCondition.Result.TIE)
-                board.clear()
-            else {
+                coordinates = this.randomCoordinates()
+            else
                 coordinates = this._currentStatus.coordinates
-                for (c in this._currentStatus.coordinates)
-                    board[c.row][c.column] = Figure.EMPTY
-            }
+
+            for (c in coordinates)
+                board[c.row][c.column] = Figure.EMPTY
 
             this._state.update(
                 board = board,
@@ -91,7 +98,7 @@ constructor(
             )
         }
 
-        this._currentStatus = Status()
+        this._currentStatus = Status.NONE
         return coordinates
     }
 
@@ -107,4 +114,7 @@ constructor(
             score = GameState.DEFAULT_SCORE
         )
     }
+
+    private fun randomCoordinates(): List<Coordinates> =
+        List(2 * this._boardSize) { Coordinates(Random.nextInt(this._boardSize), Random.nextInt(this._boardSize)) }
 }

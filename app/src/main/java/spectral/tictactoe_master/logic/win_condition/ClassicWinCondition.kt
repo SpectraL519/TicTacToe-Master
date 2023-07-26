@@ -9,12 +9,15 @@ import kotlin.math.pow
 
 
 object ClassicWinCondition : IWinCondition {
+    override val boardSize: Int? = null
+
     override fun check (board: GameBoard): Status {
         val boardSize: Int = board.size()
 
         if (board.diagonal().all { it == Figure.O })
             return Status(
-                result = IWinCondition.Result.O,
+                result = IWinCondition.Result.WIN,
+                player = Figure.O,
                 coordinates = List(boardSize) {
                     index -> Coordinates(index, index)
                 }
@@ -22,7 +25,8 @@ object ClassicWinCondition : IWinCondition {
 
         if (board.diagonal().all { it == Figure.X })
             return Status(
-                result = IWinCondition.Result.X,
+                result = IWinCondition.Result.WIN,
+                player = Figure.X,
                 coordinates = List(boardSize) {
                     index -> Coordinates(index, index)
                 }
@@ -30,7 +34,8 @@ object ClassicWinCondition : IWinCondition {
 
         if (board.diagonal(false).all { it == Figure.O })
             return Status(
-                result = IWinCondition.Result.O,
+                result = IWinCondition.Result.WIN,
+                player = Figure.O,
                 coordinates = List(boardSize) {
                     index -> Coordinates(index, boardSize - 1 - index)
                 }
@@ -38,7 +43,8 @@ object ClassicWinCondition : IWinCondition {
 
         if (board.diagonal(false).all { it == Figure.X })
             return Status(
-                result = IWinCondition.Result.X,
+                result = IWinCondition.Result.WIN,
+                player = Figure.X,
                 coordinates = List(boardSize) {
                     index -> Coordinates(index, boardSize - 1 - index)
                 }
@@ -47,7 +53,8 @@ object ClassicWinCondition : IWinCondition {
         for (i: Int in 0 until boardSize) {
             if (board.row(i).all { it == Figure.O })
                 return Status(
-                    result = IWinCondition.Result.O,
+                    result = IWinCondition.Result.WIN,
+                    player = Figure.O,
                     coordinates = List(boardSize) {
                         index -> Coordinates(i, index)
                     }
@@ -55,7 +62,8 @@ object ClassicWinCondition : IWinCondition {
 
             if (board.row(i).all { it == Figure.X })
                 return Status(
-                    result = IWinCondition.Result.X,
+                    result = IWinCondition.Result.WIN,
+                    player = Figure.X,
                     coordinates = List(boardSize) {
                         index -> Coordinates(i, index)
                     }
@@ -63,7 +71,8 @@ object ClassicWinCondition : IWinCondition {
 
             if (board.column(i).all { it == Figure.O })
                 return Status(
-                    result = IWinCondition.Result.O,
+                    result = IWinCondition.Result.WIN,
+                    player = Figure.O,
                     coordinates = List(boardSize) {
                         index -> Coordinates(index, i)
                     }
@@ -71,7 +80,8 @@ object ClassicWinCondition : IWinCondition {
 
             if (board.column(i).all { it == Figure.X })
                 return Status(
-                    result = IWinCondition.Result.X,
+                    result = IWinCondition.Result.WIN,
+                    player = Figure.X,
                     coordinates = List(boardSize) {
                         index -> Coordinates(index, i)
                     }
@@ -79,12 +89,11 @@ object ClassicWinCondition : IWinCondition {
         }
 
         if (board.full())
-            return Status(result = IWinCondition.Result.TIE)
-
-        return Status(result = IWinCondition.Result.NONE)
+            return Status.TIE
+        return Status.NONE
     }
 
-    override fun getEvaluation(board: GameBoard, player: Figure): Long {
+    override fun evaluation(board: GameBoard, player: Figure): Long {
         val boardSize = board.size()
         val maxEval = 10.0.pow(boardSize.toDouble()).toLong()
         val opponent = player.next()

@@ -1,8 +1,8 @@
 package spectral.tictactoe_master.logic
 
-import spectral.tictactoe_master.logic.utils.Coordinates
 import org.junit.Assert
 import org.junit.Test
+import spectral.tictactoe_master.logic.utils.Coordinates
 
 
 

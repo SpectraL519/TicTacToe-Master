@@ -1,9 +1,9 @@
 package spectral.tictactoe_master.logic
 
-import spectral.tictactoe_master.logic.win_condition.ClassicWinCondition
-import spectral.tictactoe_master.logic.win_condition.MobiusStripWinCondition
 import org.junit.Assert
 import org.junit.Test
+import spectral.tictactoe_master.logic.win_condition.ClassicWinCondition
+import spectral.tictactoe_master.logic.win_condition.MobiusStripWinCondition
 
 
 
