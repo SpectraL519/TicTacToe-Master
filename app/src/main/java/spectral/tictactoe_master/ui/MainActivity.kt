@@ -1,7 +1,8 @@
-package spectral.tictactoe_master
+package spectral.tictactoe_master.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import spectral.tictactoe_master.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
